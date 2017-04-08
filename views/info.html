@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Hero - Admin</title>
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
+  <style>
+    .hero-list img {
+      width: 50px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="page-header container">
+      <h1><a href="/">王者荣耀</a> <small>英雄管理器</small></h1>
+    </div>
+  </header>
+  <div class="container hero-list">
+    <p>ID：{{ hero.id }}</p>
+    <p>英雄名称：{{ hero.name }}</p>
+    <p>英雄性别：{{ hero.gender }}</p>
+    <p>英雄图片：</p>
+    <img src="{{ hero.avatar }}" alt="">
+  </div>
+  <script src="/node_modules/jquery/dist/jquery.js"></script>
+</body>
+
+</html>
+

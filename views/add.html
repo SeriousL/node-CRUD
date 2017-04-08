@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Hero - Admin</title>
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
+  <style>
+    .hero-list img {
+      width: 50px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="page-header container">
+      <h1><a href="/">王者荣耀</a> <small>英雄管理器</small></h1>
+    </div>
+  </header>
+  <div class="container hero-list">
+
+    <!-- 
+      没有文件的普通表单 POST 提交
+        表单会把数据以查询字符串（放到请求体）的形式发送给服务端
+        由于表单 post 提交可能会有大量的数据，所以表单可能会分段发送多次表单数据到服务端
+     -->
+    <form id="form" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="exampleInputEmail1">英雄名称</label>
+        <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="请输入英雄名称">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">英雄性别</label>
+        <div class="radio">
+          <label>
+            <input type="radio" name="gender" id="optionsRadios1" value="男" checked>男
+          </label>
+          <label>
+            <input type="radio" name="gender" id="optionsRadios1" value="女">女
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <img src="" alt="预览" id="preview_img">
+        <label for="exampleInputFile">英雄图片</label>
+        <input type="file" id="exampleInputFile" name="avatar">
+        <p class="help-block">请上传英雄图片.</p>
+      </div>
+      <button type="submit" class="btn btn-success">点击保存</button>
+    </form>
+  </div>
+  <script src="/node_modules/jquery/dist/jquery.js"></script>
+  <script>
+    //图片预览
+
+    $('#exampleInputFile').on('change', function () {
+      //获取要提交的图片信息 放到imgUploadForm中
+      var imgUploadForm = new FormData();
+      imgUploadForm.append('avatar', document.getElementById('exampleInputFile').files[0]);
+      //发送请求
+      $.ajax({
+        url: '/upload',
+        type: 'post',
+        data: imgUploadForm,
+        processData: false, // 告诉 jQuery 不要去处理 data 数据
+        contentType: false, // 默认 jQuery 把 Content-Type 设置成了 application/xxx 指定 false 就是不让它设置，使用 multipart/form-data
+        dataType: 'json',
+        success: function (data) {
+          if (data.err_code === 0) {
+            console.log(data);
+            //渲染图片
+            $('#preview_img').attr('src',data.result)
+          }
+        }
+      })
+    })
+
+
+    //提交操作
+    $('#form').on('submit', function (e) {
+      // 禁用表单的默认提交行为
+      e.preventDefault()
+      //使用XMLHttpRequest2 
+      //生成formData
+      var formData = new FormData($('#form')[0])
+      $.ajax({
+        url: '/add',
+        type: 'post',
+        data: formData,
+        processData: false, // 告诉 jQuery 不要去处理 data 数据
+        contentType: false, // 默认 jQuery 把 Content-Type 设置成了 application/xxx 指定 false 就是不让它设置，使用 multipart/form-data
+        dataType: 'json',
+        success: function (data) {
+          console.log(data);
+          if (data.err_code == 0) {
+            location.href = '/';
+          }
+        }
+      })
+    })
+  </script>
+</body>
+
+</html>
