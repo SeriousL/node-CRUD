@@ -8,40 +8,16 @@
             "origin_avatar": "img\\upload_7756aecaa79b51421f45169b6a7b396e"
         },
         {
-            "id": 6,
-            "name": "李白",
+            "name": "天天",
             "gender": "男",
-            "avatar": "img/131.jpg"
+            "avatar": "img/upload_4e7f45077daee81aac9fa275f6470357.jpg",
+            "id": 18
         },
         {
-            "id": 7,
-            "name": "李白",
+            "name": "让人",
             "gender": "男",
-            "avatar": "img/131.jpg"
-        },
-        {
-            "id": 8,
-            "name": "李白",
-            "gender": "男",
-            "avatar": "img/131.jpg"
-        },
-        {
-            "name": "白白",
-            "gender": "男",
-            "avatar": "img/upload_a29d2de5556b58532c83e6558dc58013.jpg",
-            "id": 13
-        },
-        {
-            "name": "99",
-            "gender": "女",
-            "avatar": "img/upload_35062fc801f41ea41d1966f605e9e5a5.jpg",
-            "id": 14
-        },
-        {
-            "name": "",
-            "gender": "男",
-            "avatar": "img/upload_c8d0d01368bb887034b3e16e83e17aea.jpg",
-            "id": 15
+            "avatar": "img/upload_cf49f6430a20159dc186d3810ea50e04.jpg",
+            "id": 19
         }
     ]
 }

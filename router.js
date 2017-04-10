@@ -31,6 +31,8 @@ module.exports = function (req, res) {
         handler.doEdit(req, res);
     } else if (method == 'post' && pathname == '/upload') {
         handler.doUpload(req, res);
+    } else if (method == 'get' && pathname == '/heros') {
+       handler.getHeros(req, res)
     } else if (method == 'get' && pathname == '/delete') {
         handler.doDelete(req, res);
     } else if (method == 'get' && pathname.indexOf('/node_modules/') == 0 || pathname.indexOf('/img/') == 0 || pathname == '/favicon.ico' || pathname.indexOf('/uploads/') == 0) {

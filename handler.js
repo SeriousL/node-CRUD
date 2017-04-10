@@ -186,3 +186,19 @@ exports.doDelete = function (req, res) {
         })
     })
 }
+
+//返回数据
+exports.getHeros = function (req, res) {
+    model.getAll(function (err, data) {
+        if (err) {
+            return res.json({
+                err_code: 500,
+                message: err.message
+            })
+        }
+        res.json({
+            err_code: 0,
+            result: data
+        })
+    })
+}

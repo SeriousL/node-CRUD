@@ -28,44 +28,81 @@
         <th>头像</th>
         <th>操作</th>
       </thead>
-      <tbody>
-        {{ each heros }}
-        <tr>
-          <td>{{ $value.id }}</td>
-          <td>{{ $value.name }}</td>
-          <td>{{ $value.gender }}</td>
-          <td><img src="{{ $value.avatar }}" alt=""></td>
-          <td>
-            <a href="/info?id={{ $value.id }}">查看</a>
-            <a href="/edit?id={{ $value.id }}">编辑</a>
-            <a href="/delete?id={{ $value.id }}" class="delete">删除</a>
-          </td>
-        </tr>
-        {{ /each }}
+      <tbody id="tbody">
+
       </tbody>
     </table>
   </div>
   <script src="/node_modules/jquery/dist/jquery.js"></script>
   <script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="/node_modules/art-template/dist/template-native.js"></script>
+  <script type="text/template" id="tpl">
+    <% heros.forEach(function (hero) { %>
+      <tr>
+        <td>
+          <%= hero.id %>
+        </td>
+        <td>
+          <%= hero.name %>
+        </td>
+        <td>
+          <%= hero.gender %>
+        </td>
+        <td><img src="<%= hero.avatar %>" alt=""></td>
+        <td>
+          <a href="/info?id=<%= hero.id %>">查看</a>
+          <a href="/edit?id=<%= hero.id %>">编辑</a>
+          <a class="remove" href="/delete?id=<%= hero.id %>">删除</a>
+        </td>
+      </tr>
+      <% }) %>
+  </script>
 </body>
 <script>
-  $('.delete').on('click', function (e) {
-    // console.log(1);
-    e.preventDefault();
-    if (window.confirm('are you ok？')) {
-        $.ajax({
-          url: $(this).attr('href'),
-          type: 'get',
-          dataType: 'json',
-          success: function (data) {
-            if (data.err_code === 0) {
-              // 让当前页重新刷新，这样页面重新渲染，你删除的那个数据就不存在了
-              location.href = '/';
-            }
-          }
-        })
+  //无刷新删除思路----
+  //采用客户端渲染  这样才可以无刷新呀
+  //页面加载 发送请求 页面加载
+  //点击按钮发送请求 删除数据
+  //删除数据后再次发送请求请求数据
+  //渲染数据
+
+
+  //页面加载 调用函数
+  loadData()
+  //请求数据参数
+  function loadData() {
+    $.ajax({
+      url: '/heros',
+      type: 'get',
+      dataType: 'json',
+      success: function (data) {
+        //获取数据 渲染
+        var html = template('tpl', data.result);
+        $('#tbody').html(html);
       }
-  })
+    })
+  }
+
+  //点击删除
+  //发送请求删除数据
+  function remove(e) {
+    e.preventDefault()
+    if (window.confirm('are you ok？')) {
+      $.ajax({
+        url: $(this).attr('href'),
+        type: 'get',
+        dataType: 'json',
+        success: function (data) {
+          if (data.err_code === 0) {
+            //删除请求响应成功后 调用函数请求数据 再次渲染
+            loadData();
+          }
+        }
+      })
+    }
+  }
+  //事件委托  给所有带有.remove的的a绑定事件
+  $('body').on('click', '.remove', remove);
 </script>
 
 </html>

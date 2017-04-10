@@ -51,7 +51,7 @@ exports.add = function (hero, callback) {
         //这个heros是获取到的heros
         var heros = data.heros;
         //这个hero是传进来的hero  这里 调整他的id 给他设置为数据中的最后一个对象的id加一
-        hero.id = heros[heros.length - 1].id + 1;
+        hero.id = heros.length === 0 ? 1 : heros[heros.length - 1].id + 1;
         //push进去
         heros.push(hero);
         saveHeros(data, function (err) {
@@ -82,7 +82,7 @@ exports.deleteById = function (id, callback) {
                     }
                     callback(null);
                 })
-            return true;
+                return true;
             }
         });
 
